@@ -91,7 +91,7 @@ export class NodeMailgun {
 	 * @param body string Message body
 	 */
 	public send(to: string, subject: string, body: string) {
-		return new Promise(async (accept, reject) => {
+		return new Promise((accept, reject) => {
 			// Check mailgun
 			if (!this.mailgun) {
 				reject(
@@ -116,9 +116,9 @@ export class NodeMailgun {
 			};
 
 			// Send email
-			this.mailgun.messages().send(message, (error, body) => {
+			this.mailgun.messages().send(message, (error, result) => {
 				// Pass result through Promise
-				error ? reject(error) : accept(body);
+				error ? reject(error) : accept(result);
 			});
 		});
 	}
