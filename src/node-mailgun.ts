@@ -17,7 +17,7 @@ import * as Mailgun from 'mailgun-js';
  */
 export class NodeMailgun {
 	// Mailgun core object
-	public mailgun;
+	public mailgun: Mailgun.Mailgun;
 
 	// Mailgun API Key
 	public apiKey: string;
