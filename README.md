@@ -144,3 +144,17 @@ async function main() {
 
 main();
 ```
+
+## Unsubscribe Link
+
+We recommend adding an Unsubscribe Link.  A default "Unsubscribe" link will be included at the bottom of the email, but you can customize this link if you'd like.
+
+### Disable Link
+```typescript
+mailer.unsubscribeLink = false;
+```
+
+### Custom Link
+```typescript
+mailer.unsubscribeLink = '<a href="%unsubscribe_url%">Unsubscribe from Cool Emails</a>';
+```
