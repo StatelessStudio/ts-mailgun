@@ -159,4 +159,37 @@ export class NodeMailgun {
 			});
 		});
 	}
+
+	/**
+	 * Add a member to the current mailing list
+	 * @param address Email address to add
+	 * @param name User's name
+	 * @param data User data
+	 */
+	public listAdd(address: string, name: string, data: Object) {
+		return new Promise((accept, reject) => {
+			// Check initialization
+			if (!this.mailgun || !this.list) {
+				reject(
+					'Please call NodeMailgun::initMailingList()\
+					before adding to a list.'
+				);
+
+				return;
+			}
+
+			// Create user object
+			const user = {
+				subscribed: true,
+				address: address,
+				name: name,
+				vars: data
+			};
+
+			// Add user to list
+			this.list.members().create(user, (error, result) => {
+				error ? reject(error) : accept(result);
+			});
+		});
+	}
 }
