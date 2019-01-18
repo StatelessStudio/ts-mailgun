@@ -197,6 +197,9 @@ export class NodeMailgun {
 	 * Update a user in the list
 	 * @param address Email address to add
 	 * @param data User data
+	 * 		address: string,
+	 * 		name: string,
+	 * 		vars: Object
 	 */
 	public listUpdate(address: string, data: any) {
 		return new Promise((accept, reject) => {
