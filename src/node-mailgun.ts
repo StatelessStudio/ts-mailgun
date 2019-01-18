@@ -119,7 +119,8 @@ export class NodeMailgun {
 	public send(
 		to: string,
 		subject: string | string[],
-		body: string
+		body: string,
+		templateVars = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
@@ -142,7 +143,8 @@ export class NodeMailgun {
 				from: `${this.fromTitle} <${this.fromEmail}>`,
 				to: to,
 				subject: subject,
-				html: body
+				html: body,
+				'recipient-variables': templateVars
 			};
 
 			// Send email
