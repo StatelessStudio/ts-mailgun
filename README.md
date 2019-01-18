@@ -69,11 +69,9 @@ mailer.initMailingList('mylist@mail.my-app.com')
 ### Adding Members
 
 ```typescript
-...
 mailer.listAdd('john.doe@example.com', 'John Doe', { role: 'Admin' })
 	.then(() => consoleog('Done'))
 	.catch((error) => console.error(error));
-...
 ```
 
 ### Updating Members
