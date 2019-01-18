@@ -46,6 +46,9 @@ export class NodeMailgun {
 	// Message body footer
 	public footer?: string = '';
 
+	// Unsubscribe link
+	public unsubscribeLink?: boolean | string = true;
+
 	/**
 	 * Constructor
 	 * @param apiKey (Optional) string Mailgun API Key
@@ -135,8 +138,18 @@ export class NodeMailgun {
 			// Create subject
 			subject = this.subjectPre + subject + this.subjectPost;
 
+			// Create unsubscribe link
+			let unsubscribeLink;
+			if (this.unsubscribeLink === true) {
+				unsubscribeLink =
+					'<br><a href="%unsubscribe_url%">Unsubscribe</a>';
+			}
+			else if (typeof this.unsubscribeLink === 'string') {
+				unsubscribeLink = '<br><br>' + this.unsubscribeLink;
+			}
+
 			// Create body
-			body = this.header + body + this.footer;
+			body = this.header + body + this.footer + unsubscribeLink;
 
 			// Create message parts
 			const message = {
