@@ -148,4 +148,15 @@ export class NodeMailgun {
 			});
 		});
 	}
+
+	/**
+	 * Get list data of the current mailing list
+	 */
+	public getList() {
+		return new Promise((accept, reject) => {
+			this.list.members().list((error, result) => {
+				error ? reject(error) : accept(result);
+			});
+		});
+	}
 }
