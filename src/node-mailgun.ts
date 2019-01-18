@@ -219,4 +219,12 @@ export class NodeMailgun {
 			});
 		});
 	}
+
+	/**
+	 * Unsubscribe a user from the list
+	 * @param address Email address to remove
+	 */
+	public listRemove(address: string) {
+		return this.listUpdate(address, { subscribed: false });
+	}
 }
