@@ -167,6 +167,27 @@ export class NodeMailgun {
 	}
 
 	/**
+	 * Get array of addresses in the current mailing list
+	 */
+	public getListAddresses(): Promise<any> {
+		return new Promise((accept, reject) => {
+			this.getList()
+				.then((list) => {
+					const addresses = [];
+
+					for (let user of list.items) {
+						if ('address' in user) {
+							addresses.push(user.address);
+						}
+					}
+
+					accept(addresses);
+				})
+				.catch((error) => reject(error));
+		});
+	}
+
+	/**
 	 * Add a member to the current mailing list
 	 * @param address Email address to add
 	 * @param name User's name
