@@ -166,7 +166,7 @@ export class NodeMailgun {
 	 * @param name User's name
 	 * @param data User data
 	 */
-	public listAdd(address: string, name: string, data: Object) {
+	public listAdd(address: string, name: string, data: any) {
 		return new Promise((accept, reject) => {
 			// Check initialization
 			if (!this.mailgun || !this.list) {
@@ -188,6 +188,30 @@ export class NodeMailgun {
 
 			// Add user to list
 			this.list.members().create(user, (error, result) => {
+				error ? reject(error) : accept(result);
+			});
+		});
+	}
+
+	/**
+	 * Update a user in the list
+	 * @param address Email address to add
+	 * @param data User data
+	 */
+	public listUpdate(address: string, data: any) {
+		return new Promise((accept, reject) => {
+			// Check initialization
+			if (!this.mailgun || !this.list) {
+				reject(
+					'Please call NodeMailgun::initMailingList()\
+					before adding to a list.'
+				);
+
+				return;
+			}
+
+			// Update user
+			this.list.members(address).update(data, (error, result) => {
 				error ? reject(error) : accept(result);
 			});
 		});
