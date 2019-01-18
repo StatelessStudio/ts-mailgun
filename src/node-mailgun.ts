@@ -142,7 +142,7 @@ export class NodeMailgun {
 			let unsubscribeLink;
 			if (this.unsubscribeLink === true) {
 				unsubscribeLink =
-					'<br><a href="%unsubscribe_url%">Unsubscribe</a>';
+					'<br><br><a href="%unsubscribe_url%">Unsubscribe</a>';
 			}
 			else if (typeof this.unsubscribeLink === 'string') {
 				unsubscribeLink = '<br><br>' + this.unsubscribeLink;
