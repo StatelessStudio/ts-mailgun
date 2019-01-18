@@ -112,11 +112,15 @@ export class NodeMailgun {
 
 	/**
 	 * Send a message
-	 * @param to string Email Address to send message to
+	 * @param to string | string[] Email Address to send message to
 	 * @param subject string Message subject
 	 * @param body string Message body
 	 */
-	public send(to: string, subject: string, body: string): Promise<any> {
+	public send(
+		to: string,
+		subject: string | string[],
+		body: string
+	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
 			if (!this.mailgun) {
