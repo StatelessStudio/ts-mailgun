@@ -25,6 +25,9 @@ export class NodeMailgun {
 	// Mailgun Domain Name
 	public domain: string;
 
+	// Mailgun list name
+	public list?: Mailgun.Lists;
+
 	// Sender email address
 	public fromEmail: string;
 
