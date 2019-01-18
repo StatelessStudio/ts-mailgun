@@ -1,10 +1,9 @@
 # node-mailgun
-Mailgun wrapper for sending emails from NodeJS
+Typescript Mailgun wrapper for sending emails from NodeJS
 
 ## Prerequisites
 
 - Create mailgun account (https://www.mailgun.com/)
-- Create domain
 - Add DNS records
 
 ## Installation
@@ -13,7 +12,7 @@ Mailgun wrapper for sending emails from NodeJS
 npm i StatelessStudio/node-mailgun
 ```
 
-## Setup
+## Sending Mail
 
 ```typescript
 import { NodeMailgun } from 'node-mailgun';
@@ -34,9 +33,10 @@ mailer
 
 ```
 
-### 
+or if you're using Express:
 
 ```typescript
+// Make sure you init() NodeMailgun before you start your server!
 ...
 router.post('/', (request, response, next) => {
 	mailer.send
