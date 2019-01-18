@@ -88,6 +88,29 @@ export class NodeMailgun {
 	}
 
 	/**
+	 * Initialize mailing list
+	 * @param list Address to find list by
+	 */
+	public initMailingList(list: string) {
+		// Check input
+		if (!list) {
+			throw new Error('Please supply a mailing list');
+		}
+
+		if (!this.mailgun) {
+			throw new Error(
+				'Please run NodeMailgun::init() before \
+				::initMailingList()'
+			);
+		}
+
+		// Get lists
+		this.list = this.mailgun.lists(list);
+
+		return this;
+	}
+
+	/**
 	 * Send a message
 	 * @param to string Email Address to send message to
 	 * @param subject string Message subject
