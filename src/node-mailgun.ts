@@ -97,6 +97,8 @@ export class NodeMailgun {
 				reject(
 					'Please call NodeMailgun::init() before sending a message!'
 				);
+
+				return;
 			}
 
 			// Create subject
