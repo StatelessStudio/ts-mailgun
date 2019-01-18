@@ -116,7 +116,7 @@ export class NodeMailgun {
 	 * @param subject string Message subject
 	 * @param body string Message body
 	 */
-	public send(to: string, subject: string, body: string) {
+	public send(to: string, subject: string, body: string): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
 			if (!this.mailgun) {
@@ -152,7 +152,7 @@ export class NodeMailgun {
 	/**
 	 * Get list data of the current mailing list
 	 */
-	public getList() {
+	public getList(): Promise<any> {
 		return new Promise((accept, reject) => {
 			this.list.members().list((error, result) => {
 				error ? reject(error) : accept(result);
@@ -166,7 +166,7 @@ export class NodeMailgun {
 	 * @param name User's name
 	 * @param data User data
 	 */
-	public listAdd(address: string, name: string, data: any) {
+	public listAdd(address: string, name: string, data: any): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check initialization
 			if (!this.mailgun || !this.list) {
@@ -201,7 +201,7 @@ export class NodeMailgun {
 	 * 		name: string,
 	 * 		vars: Object
 	 */
-	public listUpdate(address: string, data: any) {
+	public listUpdate(address: string, data: any): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check initialization
 			if (!this.mailgun || !this.list) {
@@ -224,7 +224,7 @@ export class NodeMailgun {
 	 * Unsubscribe a user from the list
 	 * @param address Email address to remove
 	 */
-	public listRemove(address: string) {
+	public listRemove(address: string): Promise<any> {
 		return this.listUpdate(address, { subscribed: false });
 	}
 }
