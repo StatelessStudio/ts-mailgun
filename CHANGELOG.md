@@ -1,5 +1,12 @@
 # node-mailgun
 
+## [0.1.1] Jan-18-2019
+
+### Fixes
+
+- Readme clean-up
+- Changed package index import file
+
 ## [0.1.0] Jan-18-2019
 
 ### Additions
