@@ -1,4 +1,6 @@
 import * as Mailgun from 'mailgun-js';
+import * as Handlebars from 'handlebars';
+import { MailgunTemplate } from './mailgun-template';
 
 /**
  * Create a NodeMailgun mailer.
@@ -19,6 +21,9 @@ export class NodeMailgun {
 	// Mailgun core object
 	public mailgun: Mailgun.Mailgun;
 
+	// Test mode
+	public testMode = false;
+
 	// Mailgun API Key
 	public apiKey: string;
 
@@ -26,7 +31,10 @@ export class NodeMailgun {
 	public domain: string;
 
 	// Mailgun list name
-	public list?: Mailgun.Lists;
+	public list?: any;
+
+	// Templates
+	public templates = {};
 
 	// Sender email address
 	public fromEmail: string;
@@ -91,6 +99,19 @@ export class NodeMailgun {
 	}
 
 	/**
+	 * Get the template object by keyname
+	 * @param name Keyname of the template
+	 */
+	getTemplate(name: string): boolean | MailgunTemplate {
+		if (name in this.templates) {
+			return this.templates[name];
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initialize mailing list
 	 * @param list Address to find list by
 	 */
@@ -126,6 +147,11 @@ export class NodeMailgun {
 		templateVars = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
+			if (this.testMode) {
+				accept();
+				return;
+			}
+
 			// Check mailgun
 			if (!this.mailgun) {
 				reject(
@@ -166,6 +192,28 @@ export class NodeMailgun {
 				error ? reject(error) : accept(result);
 			});
 		});
+	}
+
+	/**
+	 * Send a message from a template
+	 * @param to string | string[] Email Address to send message to
+	 * @param subject string Message subject
+	 * @param body string Message body
+	 */
+	public sendFromTemplate(
+		to: string | string[],
+		template: MailgunTemplate,
+		templateVars = {}
+	): Promise<any> {
+		let subject, body;
+
+		const subjectCompiler = Handlebars.compile(template.subject);
+		const bodyCompiler = Handlebars.compile(template.body);
+
+		subject = subjectCompiler(templateVars);
+		body = bodyCompiler(templateVars);
+
+		return this.send(to, subject, body, templateVars);
 	}
 
 	/**
@@ -247,7 +295,7 @@ export class NodeMailgun {
 			if (!this.mailgun || !this.list) {
 				reject(
 					'Please call NodeMailgun::initMailingList()\
-					before adding to a list.'
+					before updating a list.'
 				);
 
 				return;
@@ -265,51 +313,36 @@ export class NodeMailgun {
 	 * @param address Email address to remove
 	 */
 	public listRemove(address: string): Promise<any> {
-		return this.listUpdate(address, { subscribed: false });
+		return new Promise((accept, reject) => {
+			// Check initialization
+			if (!this.mailgun || !this.list) {
+				reject(
+					'Please call NodeMailgun::initMailingList()\
+					before removing from a list.'
+				);
+
+				return;
+			}
+
+			// Update user
+			this.list.members(address).delete((error, result) => {
+				error ? reject(error) : accept(result);
+			});
+		});
 	}
 
 	/**
 	 * Send to list
-	 * @param subject string Message subject
-	 * @param body string Message body HTML
-	 * @param users any[] Array of users to send to
-	 * @param userAddressKey string (Optional) User email address key to send to
-	 * 	Default is 'address'
+	 * @param newsletter Newsletter address to send to
+	 * @param subject Message subject
+	 * @param body Message body HTML
 	 */
 	public listSend(
+		newsletter: string,
 		subject: string,
-		body: string,
-		users: Object[],
-		userAddressKey = 'address'
+		body: string
 	): Promise<any> {
 		return new Promise((accept, reject) => {
-			// Build to array
-			const to = [];
-			const vars = {};
-
-			if (users instanceof Object && 'items' in users) {
-				users = users['items'];
-			}
-
-			for (let user of users) {
-				if (user instanceof Object) {
-					if (userAddressKey in user) {
-						const address = user[userAddressKey];
-						to.push(address);
-
-						vars[address] = user;
-					}
-					else {
-						reject(
-							`Address key "${userAddressKey}" does not exist in user`
-						);
-					}
-				}
-				else {
-					reject('Array of users must be array of Objects');
-				}
-			}
-
 			// Build subject
 			subject = this.subjectPre + subject + this.subjectPost;
 
@@ -317,7 +350,7 @@ export class NodeMailgun {
 			body = this.header + body + this.footer;
 
 			// Send message
-			this.send(to, subject, body, vars).then(accept).catch(reject);
+			this.send(newsletter, subject, body, {}).then(accept).catch(reject);
 		});
 	}
 }

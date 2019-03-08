@@ -1,6 +1,6 @@
 {
 	"name": "node-mailgun",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "Mailgun wrapper for sending emails from NodeJS",
 	"main": "node-mailgun.js",
 	"directories": {
@@ -8,7 +8,8 @@
 	},
 	"dependencies": {
 		"@types/mailgun-js": "^0.16.3",
-		"@types/node": "^10.12.18",
+		"@types/node": "^10.12.30",
+		"handlebars": "^4.1.0",
 		"mailgun-js": "^0.22.0"
 	},
 	"devDependencies": {},
