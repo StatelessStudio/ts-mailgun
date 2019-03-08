@@ -1,5 +1,18 @@
 # node-mailgun
 
+## [0.2.0] Mar-08-2019
+
+### Additions
+
+- [Issue #5] Add testing mode
+- [Issue #8] Add templates
+
+### Fixes
+
+- [Issue #4] [Readme] Complete example - undefined 'users'
+- [Issue #6] listRemove() does not remove the user
+- [Issue #7] listSend() should send single email to mailing list
+
 ## [0.1.1] Jan-18-2019
 
 ### Fixes
