@@ -278,46 +278,16 @@ export class NodeMailgun {
 
 	/**
 	 * Send to list
-	 * @param subject string Message subject
-	 * @param body string Message body HTML
-	 * @param users any[] Array of users to send to
-	 * @param userAddressKey string (Optional) User email address key to send to
-	 * 	Default is 'address'
+	 * @param newsletter Newsletter address to send to
+	 * @param subject Message subject
+	 * @param body Message body HTML
 	 */
 	public listSend(
+		newsletter: string,
 		subject: string,
-		body: string,
-		users: Object[],
-		userAddressKey = 'address'
+		body: string
 	): Promise<any> {
 		return new Promise((accept, reject) => {
-			// Build to array
-			const to = [];
-			const vars = {};
-
-			if (users instanceof Object && 'items' in users) {
-				users = users['items'];
-			}
-
-			for (let user of users) {
-				if (user instanceof Object) {
-					if (userAddressKey in user) {
-						const address = user[userAddressKey];
-						to.push(address);
-
-						vars[address] = user;
-					}
-					else {
-						reject(
-							`Address key "${userAddressKey}" does not exist in user`
-						);
-					}
-				}
-				else {
-					reject('Array of users must be array of Objects');
-				}
-			}
-
 			// Build subject
 			subject = this.subjectPre + subject + this.subjectPost;
 
@@ -325,7 +295,7 @@ export class NodeMailgun {
 			body = this.header + body + this.footer;
 
 			// Send message
-			this.send(to, subject, body, vars).then(accept).catch(reject);
+			this.send(newsletter, subject, body, {}).then(accept).catch(reject);
 		});
 	}
 }
