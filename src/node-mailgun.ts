@@ -31,7 +31,7 @@ export class NodeMailgun {
 	public domain: string;
 
 	// Mailgun list name
-	public list?: Mailgun.Lists;
+	public list?: any;
 
 	// Templates
 	public templates = {};
@@ -295,7 +295,7 @@ export class NodeMailgun {
 			if (!this.mailgun || !this.list) {
 				reject(
 					'Please call NodeMailgun::initMailingList()\
-					before adding to a list.'
+					before updating a list.'
 				);
 
 				return;
@@ -313,7 +313,22 @@ export class NodeMailgun {
 	 * @param address Email address to remove
 	 */
 	public listRemove(address: string): Promise<any> {
-		return this.listUpdate(address, { subscribed: false });
+		return new Promise((accept, reject) => {
+			// Check initialization
+			if (!this.mailgun || !this.list) {
+				reject(
+					'Please call NodeMailgun::initMailingList()\
+					before removing from a list.'
+				);
+
+				return;
+			}
+
+			// Update user
+			this.list.members(address).delete((error, result) => {
+				error ? reject(error) : accept(result);
+			});
+		});
 	}
 
 	/**
