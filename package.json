@@ -25,7 +25,7 @@
 		"url": "git+https://github.com/StatelessStudio/node-mailgun.git"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "stateless-studio",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/StatelessStudio/node-mailgun/issues"
