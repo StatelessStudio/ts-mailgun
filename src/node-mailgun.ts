@@ -19,6 +19,9 @@ export class NodeMailgun {
 	// Mailgun core object
 	public mailgun: Mailgun.Mailgun;
 
+	// Test mode
+	public testMode = false;
+
 	// Mailgun API Key
 	public apiKey: string;
 
@@ -126,6 +129,11 @@ export class NodeMailgun {
 		templateVars = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
+			if (this.testMode) {
+				accept();
+				return;
+			}
+
 			// Check mailgun
 			if (!this.mailgun) {
 				reject(

@@ -156,3 +156,7 @@ mailer.unsubscribeLink = false;
 ```typescript
 mailer.unsubscribeLink = '<a href="%unsubscribe_url%">Unsubscribe from Cool Emails</a>';
 ```
+
+## Test-Mode
+
+To enable test mode, set `mailer.testMode` to true. Send functions will automatically accept without sending.
