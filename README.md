@@ -160,3 +160,39 @@ mailer.unsubscribeLink = '<a href="%unsubscribe_url%">Unsubscribe from Cool Emai
 ## Test-Mode
 
 To enable test mode, set `mailer.testMode` to true. Send functions will automatically accept without sending.
+
+## Templates
+
+You can create templates as a `MailgunTemplate`, exported from `node-mailgun/mailgun-template`. This accepts a subject and body.
+
+Templates use Handlebars as the template language, so you can create templates with variables which will be rendered on send.
+
+Set `mailer.templates` to a map of templates:
+
+```typescript
+
+mailer.templates['welcome'] = new MailgunTemplate();
+mailer.templates['welcome'].subject = 'Welcome, {{username}}';
+mailer.templates['welcome'].body = '<h1>Email: {{email}}</h1>';
+
+```
+
+### Sending with a Template
+
+You can use a template to send your messages. This will render the template for the data you set.
+
+```typescript
+// Send email
+let template = mailer.getTemplate('welcome');
+
+if (template && template instanceof MailgunTemplate) {
+	await mailer
+		.sendFromTemplate('testuser@example.com', template, {
+			username: 'testuser',
+			email: 'testuser@example.com'
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+```
