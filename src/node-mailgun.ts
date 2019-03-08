@@ -1,4 +1,6 @@
 import * as Mailgun from 'mailgun-js';
+import * as Handlebars from 'handlebars';
+import { MailgunTemplate } from './mailgun-template';
 
 /**
  * Create a NodeMailgun mailer.
@@ -30,6 +32,9 @@ export class NodeMailgun {
 
 	// Mailgun list name
 	public list?: Mailgun.Lists;
+
+	// Templates
+	public templates = {};
 
 	// Sender email address
 	public fromEmail: string;
@@ -91,6 +96,19 @@ export class NodeMailgun {
 		});
 
 		return this;
+	}
+
+	/**
+	 * Get the template object by keyname
+	 * @param name Keyname of the template
+	 */
+	getTemplate(name: string): boolean | MailgunTemplate {
+		if (name in this.templates) {
+			return this.templates[name];
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -174,6 +192,28 @@ export class NodeMailgun {
 				error ? reject(error) : accept(result);
 			});
 		});
+	}
+
+	/**
+	 * Send a message from a template
+	 * @param to string | string[] Email Address to send message to
+	 * @param subject string Message subject
+	 * @param body string Message body
+	 */
+	public sendFromTemplate(
+		to: string | string[],
+		template: MailgunTemplate,
+		templateVars = {}
+	): Promise<any> {
+		let subject, body;
+
+		const subjectCompiler = Handlebars.compile(template.subject);
+		const bodyCompiler = Handlebars.compile(template.body);
+
+		subject = subjectCompiler(templateVars);
+		body = bodyCompiler(templateVars);
+
+		return this.send(to, subject, body, templateVars);
 	}
 
 	/**
