@@ -136,7 +136,7 @@ async function main() {
 
 	// Send mail
 	await mailer
-		.listSend('Newsletter', 'i got news 4 u %recipient.name%', users)
+		.listSend('newsletter@my-app.com', 'Newsletter', 'i got news 4 u %recipient.name%')
 		.catch(console.error);
 }
 
