@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as Mailgun from 'mailgun-js';
 import * as Handlebars from 'handlebars';
 import { MailgunTemplate } from './mailgun-template';
@@ -173,6 +174,9 @@ export class NodeMailgun {
 			else if (typeof this.unsubscribeLink === 'string') {
 				unsubscribeLink = '<br><br>' + this.unsubscribeLink;
 			}
+			else {
+				unsubscribeLink = '';
+			}
 
 			// Create body
 			body = this.header + body + this.footer + unsubscribeLink;
@@ -210,8 +214,12 @@ export class NodeMailgun {
 		const subjectCompiler = Handlebars.compile(template.subject);
 		const bodyCompiler = Handlebars.compile(template.body);
 
-		subject = subjectCompiler(templateVars);
-		body = bodyCompiler(templateVars);
+		let allVars = {};
+		allVars = Object.assign(templateVars);
+		allVars = Object.assign(allVars, process.env);
+
+		subject = subjectCompiler(allVars);
+		body = bodyCompiler(allVars);
 
 		return this.send(to, subject, body, templateVars);
 	}
@@ -352,5 +360,29 @@ export class NodeMailgun {
 			// Send message
 			this.send(newsletter, subject, body, {}).then(accept).catch(reject);
 		});
+	}
+
+	/**
+	 * Load header from template file
+	 * @param file Template file path
+	 */
+	public loadHeaderTemplate(file: string) {
+		const hbs = Handlebars.compile(
+			fs.readFileSync(file, { encoding: 'utf8' })
+		);
+
+		this.header = hbs(process.env);
+	}
+
+	/**
+	 * Load footer from template file
+	 * @param file Template file path
+	 */
+	public loadFooterTemplate(file: string) {
+		const hbs = Handlebars.compile(
+			fs.readFileSync(file, { encoding: 'utf8' })
+		);
+
+		this.footer = hbs(process.env);
 	}
 }

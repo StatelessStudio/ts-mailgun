@@ -196,3 +196,19 @@ if (template && template instanceof MailgunTemplate) {
 		});
 }
 ```
+
+### Loading Header & Footer from HTML Templates
+
+You can load the header & footer from HTML templates:
+
+```typescript
+	// Load mailer header/footer
+	mailer.loadHeaderTemplate('assets/html/email-header.html');
+	mailer.loadFooterTemplate('assets/html/email-footer.html');
+```
+
+If you use an unsubscribe link in your footer template, you will want to disable the default link:
+
+```typescript
+	mailer.unsubscribeLink = false;
+```
