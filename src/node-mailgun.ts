@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as Mailgun from 'mailgun-js';
 import * as Handlebars from 'handlebars';
 import { MailgunTemplate } from './mailgun-template';
@@ -172,6 +173,9 @@ export class NodeMailgun {
 			}
 			else if (typeof this.unsubscribeLink === 'string') {
 				unsubscribeLink = '<br><br>' + this.unsubscribeLink;
+			}
+			else {
+				unsubscribeLink = '';
 			}
 
 			// Create body
