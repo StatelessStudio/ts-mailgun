@@ -361,4 +361,28 @@ export class NodeMailgun {
 			this.send(newsletter, subject, body, {}).then(accept).catch(reject);
 		});
 	}
+
+	/**
+	 * Load header from template file
+	 * @param file Template file path
+	 */
+	public loadHeaderTemplate(file: string) {
+		const hbs = Handlebars.compile(
+			fs.readFileSync(file, { encoding: 'utf8' })
+		);
+
+		this.header = hbs(process.env);
+	}
+
+	/**
+	 * Load footer from template file
+	 * @param file Template file path
+	 */
+	public loadFooterTemplate(file: string) {
+		const hbs = Handlebars.compile(
+			fs.readFileSync(file, { encoding: 'utf8' })
+		);
+
+		this.footer = hbs(process.env);
+	}
 }
