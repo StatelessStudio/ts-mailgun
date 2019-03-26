@@ -214,8 +214,12 @@ export class NodeMailgun {
 		const subjectCompiler = Handlebars.compile(template.subject);
 		const bodyCompiler = Handlebars.compile(template.body);
 
-		subject = subjectCompiler(templateVars);
-		body = bodyCompiler(templateVars);
+		let allVars = {};
+		allVars = Object.assign(templateVars);
+		allVars = Object.assign(allVars, process.env);
+
+		subject = subjectCompiler(allVars);
+		body = bodyCompiler(allVars);
 
 		return this.send(to, subject, body, templateVars);
 	}
