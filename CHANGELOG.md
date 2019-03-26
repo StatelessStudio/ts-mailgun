@@ -1,5 +1,15 @@
 # node-mailgun
 
+## [0.3.0] Mar-26-2019
+
+### Additions
+- [Issue #13] sendFromTemplate() should compile process.env variables
+- [Issue #14] Add functions to load header & footer from html template files
+
+### Fixes
+- [Issue #12] Unsubscribe false appends 'undefined' to body
+- npm update
+
 ## [0.2.0] Mar-08-2019
 
 ### Additions
