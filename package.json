@@ -1,8 +1,8 @@
 {
-	"name": "node-mailgun",
+	"name": "ts-mailgun",
 	"version": "0.3.0",
 	"description": "Mailgun wrapper for sending emails from NodeJS",
-	"main": "node-mailgun.js",
+	"main": "ts-mailgun.js",
 	"directories": {
 		"test": "test"
 	},
@@ -22,13 +22,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/StatelessStudio/node-mailgun.git"
+		"url": "git+https://github.com/StatelessStudio/ts-mailgun.git"
 	},
 	"keywords": [],
 	"author": "stateless-studio",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/StatelessStudio/node-mailgun/issues"
+		"url": "https://github.com/StatelessStudio/ts-mailgun/issues"
 	},
-	"homepage": "https://github.com/StatelessStudio/node-mailgun#readme"
+	"homepage": "https://github.com/StatelessStudio/ts-mailgun#readme"
 }

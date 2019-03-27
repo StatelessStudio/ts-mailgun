@@ -1,4 +1,4 @@
-# node-mailgun
+# ts-mailgun
 
 ## [0.3.0] Mar-26-2019
 

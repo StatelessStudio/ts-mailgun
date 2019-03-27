@@ -1,4 +1,4 @@
-# node-mailgun
+# ts-mailgun
 Typescript Mailgun wrapper for sending emails from NodeJS
 
 ## Prerequisites
@@ -9,13 +9,13 @@ Typescript Mailgun wrapper for sending emails from NodeJS
 ## Installation
 
 ```
-npm i StatelessStudio/node-mailgun
+npm i StatelessStudio/ts-mailgun
 ```
 
 ## Sending Mail
 
 ```typescript
-import { NodeMailgun } from 'node-mailgun';
+import { NodeMailgun } from 'ts-mailgun';
 
 const mailer = new NodeMailgun();
 mailer.apiKey = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Set your API key
@@ -47,7 +47,7 @@ router.post('/', (request, response, next) => {
 ...
 ```
 
-View the complete [NodeMailgun example](https://github.com/StatelessStudio/node-mailgun/blob/master/test/example.ts)
+View the complete [NodeMailgun example](https://github.com/StatelessStudio/ts-mailgun/blob/master/test/example.ts)
 
 ## Mailing List
 
@@ -163,7 +163,7 @@ To enable test mode, set `mailer.testMode` to true. Send functions will automati
 
 ## Templates
 
-You can create templates as a `MailgunTemplate`, exported from `node-mailgun/mailgun-template`. This accepts a subject and body.
+You can create templates as a `MailgunTemplate`, exported from `ts-mailgun/mailgun-template`. This accepts a subject and body.
 
 Templates use Handlebars as the template language, so you can create templates with variables which will be rendered on send.
 
