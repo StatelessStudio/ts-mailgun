@@ -9,7 +9,7 @@ Typescript Mailgun wrapper for sending emails from NodeJS
 ## Installation
 
 ```
-npm i StatelessStudio/ts-mailgun
+npm i ts-mailgun
 ```
 
 ## Sending Mail
@@ -92,7 +92,7 @@ mailer.listRemove('john.doe@example.com')
 
 ### Get List
 
-Get your mailing list for administration or for bulk sending.  You can also filter and map your users before passing to `send()`.
+Get your mailing list for administration or for bulk sending.  You can also filter and map your users befts mailgunore passing to `send()`.
 
 #### getList()
 
