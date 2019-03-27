@@ -1,4 +1,10 @@
-# node-mailgun
+# ts-mailgun
+
+## [0.3.1] Mar-26-2019 - npm publish
+
+### Fixes
+- npm publish
+- Updated install instructions
 
 ## [0.3.0] Mar-26-2019
 

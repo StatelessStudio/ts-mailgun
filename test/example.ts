@@ -1,4 +1,4 @@
-import { NodeMailgun } from '../src/node-mailgun';
+import { NodeMailgun } from '../src/ts-mailgun';
 
 // Setup mailgun
 const mailer = new NodeMailgun();
