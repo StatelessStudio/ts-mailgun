@@ -215,7 +215,7 @@ export class NodeMailgun {
 		const bodyCompiler = Handlebars.compile(template.body);
 
 		let allVars = {};
-		allVars = Object.assign(templateVars);
+		allVars = Object.assign(allVars, templateVars);
 		allVars = Object.assign(allVars, process.env);
 
 		subject = subjectCompiler(allVars);
