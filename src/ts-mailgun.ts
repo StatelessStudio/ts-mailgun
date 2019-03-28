@@ -350,16 +350,7 @@ export class NodeMailgun {
 		subject: string,
 		body: string
 	): Promise<any> {
-		return new Promise((accept, reject) => {
-			// Build subject
-			subject = this.subjectPre + subject + this.subjectPost;
-
-			// Build body
-			body = this.header + body + this.footer;
-
-			// Send message
-			this.send(newsletter, subject, body, {}).then(accept).catch(reject);
-		});
+		return this.send(newsletter, subject, body, {});
 	}
 
 	/**
