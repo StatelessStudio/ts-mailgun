@@ -1,5 +1,11 @@
 # ts-mailgun
 
+## [0.3.2] Mar-28-2019
+
+### Fixes
+- [Issue #18] sendFromTemplate() fails to properly copy payload
+- [Issue #17] listSend() doubles header & footer
+
 ## [0.3.1] Mar-26-2019 - npm publish
 
 ### Fixes
