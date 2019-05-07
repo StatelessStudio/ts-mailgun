@@ -1,6 +1,8 @@
 # ts-mailgun
 Typescript Mailgun wrapper for sending emails from NodeJS
 
+Created and maintained by Stateless Studio: https://stateless.studio
+
 ## Prerequisites
 
 - Create mailgun account (https://www.mailgun.com/)
