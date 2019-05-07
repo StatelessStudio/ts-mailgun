@@ -1,6 +1,6 @@
 # ts-mailgun
 
-## [0.3.4] May-07-2019
+## [0.3.5] May-07-2019
 
 Added author credit
 
