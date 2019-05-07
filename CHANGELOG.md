@@ -1,5 +1,11 @@
 # ts-mailgun
 
+## [0.3.3] May-07-2019
+
+### Fixes
+- [Issue #20] Change license in package.json
+- npm update
+
 ## [0.3.2] Mar-28-2019
 
 ### Fixes
