@@ -26,7 +26,7 @@
 	},
 	"keywords": [],
 	"author": "stateless-studio",
-	"license": "ISC",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/StatelessStudio/ts-mailgun/issues"
 	},
