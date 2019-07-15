@@ -1,5 +1,11 @@
 # ts-mailgun
 
+## [0.3.6] Jul-15-2019
+
+### Fixes
+- Updated dependency with security update `lodash`
+- Updated dependencies
+
 ## [0.3.5] May-07-2019
 
 Added author credit
