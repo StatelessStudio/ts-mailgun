@@ -6,7 +6,7 @@ import { MailgunTemplate } from './mailgun-template';
 /**
  * Create a NodeMailgun mailer.
  * 	You must create a new NodeMailgun() instance, set the necessary members (below),
- * 	and then call init().  After initialization, you can then call send() to send an
+ * 	and then call init(). After initialization, you can then call send() to send an
  * 	email.
  * 
  * 	Necessary Members:

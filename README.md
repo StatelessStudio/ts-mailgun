@@ -94,7 +94,7 @@ mailer.listRemove('john.doe@example.com')
 
 ### Get List
 
-Get your mailing list for administration or for bulk sending.  You can also filter and map your users befts mailgunore passing to `send()`.
+Get your mailing list for administration or for bulk sending. You can also filter and map your users befts mailgunore passing to `send()`.
 
 #### getList()
 
@@ -147,7 +147,7 @@ main();
 
 ## Unsubscribe Link
 
-We recommend adding an Unsubscribe Link.  A default "Unsubscribe" link will be included at the bottom of the email, but you can customize this link if you'd like.
+We recommend adding an Unsubscribe Link. A default "Unsubscribe" link will be included at the bottom of the email, but you can customize this link if you'd like.
 
 ### Disable Link
 ```typescript
