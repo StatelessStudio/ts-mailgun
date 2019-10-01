@@ -1,5 +1,10 @@
 # ts-mailgun
 
+## [0.3.7] Oct-01-2019
+
+### Fixes
+- npm update
+
 ## [0.3.6] Jul-15-2019
 
 ### Fixes
