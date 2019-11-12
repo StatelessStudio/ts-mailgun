@@ -3,6 +3,7 @@
 ## [0.3.8] Nov-12-2019
 
 ### Fixes
+- Add `.prettierrc`
 - npm update
 
 ## [0.3.7] Oct-01-2019
