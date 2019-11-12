@@ -1,5 +1,5 @@
 # ts-mailgun
-Typescript Mailgun wrapper for sending emails from NodeJS
+Typescript Mailgun wrapper for sending emails in NodeJS
 
 Created and maintained by [Stateless Studio](https://stateless.studio)
 
@@ -72,7 +72,7 @@ mailer.initMailingList('mylist@mail.my-app.com')
 
 ```typescript
 mailer.listAdd('john.doe@example.com', 'John Doe', { role: 'Admin' })
-	.then(() => consoleog('Done'))
+	.then(() => console.log('Done'))
 	.catch((error) => console.error(error));
 ```
 
@@ -94,7 +94,7 @@ mailer.listRemove('john.doe@example.com')
 
 ### Get List
 
-Get your mailing list for administration or for bulk sending. You can also filter and map your users befts mailgunore passing to `send()`.
+Get your mailing list for administration or for bulk sending. You can also filter and map your users before passing the list to `send()`.
 
 #### getList()
 
