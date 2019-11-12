@@ -3,6 +3,7 @@
 ## [0.3.8] Nov-12-2019
 
 ### Fixes
+- Fixed readme typos
 - Add `.prettierrc`
 - npm update
 
