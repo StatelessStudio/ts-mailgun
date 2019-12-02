@@ -31,6 +31,9 @@ export class NodeMailgun {
 	// Mailgun Domain Name
 	public domain: string;
 
+	// Mailgun Options
+	public options?: Object;
+
 	// Mailgun list name
 	public list?: any;
 
@@ -90,6 +93,7 @@ export class NodeMailgun {
 			throw new Error('Please set NodeMailgun::fromTitle');
 		}
 
+		// Mailgun options
 		let options = {
 			apiKey: this.apiKey,
 			domain: this.domain
@@ -97,6 +101,10 @@ export class NodeMailgun {
 
 		if (this.testMode) {
 			options['testMode'] = true;
+		}
+
+		if (this.options) {
+			options = Object.assign(options, this.options);
 		}
 
 		// Initialize Mailgun

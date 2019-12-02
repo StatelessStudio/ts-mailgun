@@ -51,6 +51,27 @@ router.post('/', (request, response, next) => {
 
 View the complete [NodeMailgun example](https://github.com/StatelessStudio/ts-mailgun/blob/master/test/example.ts)
 
+## Mailgun Options
+
+You may set additional Mailgun options before initializing by setting `NodeMailgun::options`:
+
+```typescript
+const mailer = new NodeMailgun();
+mailer.apiKey = 'XXXXXXXXXXXXXXXXXXXXXXXXX';
+mailer.domain = 'mail.my-sample-app.com';
+
+// Setting Mailgun options
+mailer.options = {
+	host: 'api.eu.mailgun.net'
+};
+
+mailer.init();
+```
+
+A full list of options may be found here:
+https://www.npmjs.com/package/mailgun-js#options
+
+
 ## Mailing List
 
 ### Create a Mailing List

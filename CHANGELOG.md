@@ -3,8 +3,10 @@
 ## [0.4.0] Dec-02-2019
 
 ### Additions
+- [Issue #27] Add Mailgun custom options
 
 ### Fixes
+- [Issue #26] Change host to 'api.eu.mailgun.net'
 - [Issue #25] Update TravisCI Node version
 - [Issue #10] Should not call list api in testMode
 
