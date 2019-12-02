@@ -71,6 +71,25 @@ mailer.init();
 A full list of options may be found here:
 https://www.npmjs.com/package/mailgun-js#options
 
+## Mail Options
+
+You may add additional options to `send()` by passing an object to `sendOptions`.
+
+### Attachments
+
+View the Mailgun documentation: https://www.npmjs.com/package/mailgun-js#attachments 
+
+```typescript
+const filepath = path.join(__dirname, 'mailgun_logo.png');
+
+mailer.send(
+	'serobnic@mail.ru',
+	'Hello',
+	'Testing some Mailgun awesomeness!',
+	{},
+	{ attachment: filepath } // Set attachment
+);
+```
 
 ## Mailing List
 

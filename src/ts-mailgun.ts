@@ -154,12 +154,15 @@ export class NodeMailgun {
 	 * @param to string | string[] Email Address to send message to
 	 * @param subject string Message subject
 	 * @param body string Message body
+	 * @param templateVars Object Template variables to send
+	 * @param sendOptions Object Additional message options to send
 	 */
 	public send(
 		to: string | string[],
 		subject: string,
 		body: string,
-		templateVars = {}
+		templateVars = {},
+		sendOptions = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
@@ -191,13 +194,15 @@ export class NodeMailgun {
 			body = this.header + body + this.footer + unsubscribeLink;
 
 			// Create message parts
-			const message = {
+			let message = {
 				from: `${this.fromTitle} <${this.fromEmail}>`,
 				to: to,
 				subject: subject,
 				html: body,
 				'recipient-variables': templateVars
 			};
+
+			message = Object.assign(message, sendOptions);
 
 			// Send email
 			this.mailgun.messages().send(message, (error, result) => {
@@ -212,11 +217,14 @@ export class NodeMailgun {
 	 * @param to string | string[] Email Address to send message to
 	 * @param subject string Message subject
 	 * @param body string Message body
+	 * @param templateVars Object Template variables to send
+	 * @param sendOptions Object Additional message options to send
 	 */
 	public sendFromTemplate(
 		to: string | string[],
 		template: MailgunTemplate,
-		templateVars = {}
+		templateVars = {},
+		sendOptions = {}
 	): Promise<any> {
 		let subject, body;
 
@@ -230,7 +238,7 @@ export class NodeMailgun {
 		subject = subjectCompiler(allVars);
 		body = bodyCompiler(allVars);
 
-		return this.send(to, subject, body, templateVars);
+		return this.send(to, subject, body, templateVars, sendOptions);
 	}
 
 	/**
