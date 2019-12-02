@@ -254,3 +254,27 @@ If you use an unsubscribe link in your footer template, you will want to disable
 ```typescript
 	mailer.unsubscribeLink = false;
 ```
+
+## Accessing the Mailgun object directly
+
+The `Mailgun` object is exposed through `NodeMailgun::mailgun`, so you can access it directly
+
+### Generic Requests
+
+If you'd like to send Generic Requests (https://www.npmjs.com/package/mailgun-js#generic-requests), you may use the `mailgun` member:
+
+```typescript
+const mailer = new NodeMailgun();
+
+...
+
+mailer.init();
+
+mailer.mailgun.get(
+	'/samples.mailgun.org/stats',
+	{ event: ['sent', 'delivered'] },
+	function (error, body) {
+		console.log(body);
+	}
+);
+```
