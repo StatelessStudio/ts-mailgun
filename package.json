@@ -12,7 +12,7 @@
 		"mailgun-js": "^0.22.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.12.11"
+		"@types/node": "^12.12.14"
 	},
 	"scripts": {
 		"test": "npm run build && jasmine --config=test/jasmine",

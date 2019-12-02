@@ -11,6 +11,7 @@
 - [Issue #26] Change host to 'api.eu.mailgun.net'
 - [Issue #25] Update TravisCI Node version
 - [Issue #10] Should not call list api in testMode
+- npm update
 
 ## [0.3.9] Nov-22-2019
 
