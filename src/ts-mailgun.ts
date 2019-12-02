@@ -90,11 +90,17 @@ export class NodeMailgun {
 			throw new Error('Please set NodeMailgun::fromTitle');
 		}
 
-		// Initialize Mailgun
-		this.mailgun = new Mailgun({
+		let options = {
 			apiKey: this.apiKey,
 			domain: this.domain
-		});
+		};
+
+		if (this.testMode) {
+			options['testMode'] = true;
+		}
+
+		// Initialize Mailgun
+		this.mailgun = new Mailgun(options);
 
 		return this;
 	}
@@ -148,11 +154,6 @@ export class NodeMailgun {
 		templateVars = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
-			if (this.testMode) {
-				accept();
-				return;
-			}
-
 			// Check mailgun
 			if (!this.mailgun) {
 				reject(

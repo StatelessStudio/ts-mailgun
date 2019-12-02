@@ -2,6 +2,7 @@ import { NodeMailgun } from '../src/ts-mailgun';
 
 // Setup mailgun
 const mailer = new NodeMailgun();
+mailer.testMode = true;
 mailer.apiKey = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 mailer.domain = 'mail.my-sample-app.com';
 mailer.fromEmail = 'noreply@my-sample-app.com';
