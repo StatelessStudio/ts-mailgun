@@ -1,5 +1,19 @@
 # ts-mailgun
 
+## [0.4.0] Dec-02-2019
+
+### Additions
+- [Issue #31] Add documentation about accessing Mailgun member directly
+- [Issue #29] Add send() options parameter
+- [Issue #28] Add npm keywords
+- [Issue #27] Add Mailgun custom options
+
+### Fixes
+- [Issue #26] Change host to 'api.eu.mailgun.net'
+- [Issue #25] Update TravisCI Node version
+- [Issue #10] Should not call list api in testMode
+- npm update
+
 ## [0.3.9] Nov-22-2019
 
 ### Fixes
