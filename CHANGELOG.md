@@ -3,6 +3,7 @@
 ## [0.4.0] Dec-02-2019
 
 ### Additions
+- [Issue #28] Add npm keywords
 - [Issue #27] Add Mailgun custom options
 
 ### Fixes

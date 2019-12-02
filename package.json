@@ -25,11 +25,15 @@
 		"type": "git",
 		"url": "git+https://github.com/StatelessStudio/ts-mailgun.git"
 	},
-	"keywords": [],
 	"author": "stateless-studio",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/StatelessStudio/ts-mailgun/issues"
 	},
-	"homepage": "https://github.com/StatelessStudio/ts-mailgun#readme"
+	"homepage": "https://github.com/StatelessStudio/ts-mailgun#readme",
+	"keywords": [
+		"typescript",
+		"mailgun",
+		"email"
+	]
 }
