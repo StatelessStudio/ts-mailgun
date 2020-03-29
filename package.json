@@ -7,12 +7,12 @@
 		"test": "test"
 	},
 	"dependencies": {
-		"@types/mailgun-js": "^0.22.3",
-		"handlebars": "^4.7.2",
+		"@types/mailgun-js": "^0.22.4",
+		"handlebars": "^4.7.3",
 		"mailgun-js": "^0.22.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.12.26"
+		"@types/node": "^12.12.32"
 	},
 	"scripts": {
 		"test": "npm run build && jasmine --config=test/jasmine",
