@@ -1,5 +1,10 @@
 # ts-mailgun
 
+## [0.4.2] Mar-29-2020
+
+### Fixes
+- npm update
+
 ## [0.4.1] Feb-01-2020
 
 ### Fixes
