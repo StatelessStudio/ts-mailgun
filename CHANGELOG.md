@@ -1,5 +1,11 @@
 # ts-mailgun
 
+## [0.4.3] Sep-13-2020 - Repackage
+
+### Fixes
+- [Issue #36] Dependency breaks CI builds
+- npm update
+
 ## [0.4.2] Mar-29-2020
 
 ### Fixes
