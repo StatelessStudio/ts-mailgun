@@ -2,23 +2,26 @@
 	"name": "ts-mailgun",
 	"version": "0.4.3",
 	"description": "Mailgun wrapper for sending emails from NodeJS",
-	"main": "ts-mailgun.js",
+	"main": "dist/ts-mailgun.js",
+	"types": "dist/ts-mailgun.d.ts",
 	"directories": {
 		"test": "test"
 	},
+	"files": ["dist/*"],
 	"dependencies": {
 		"@types/mailgun-js": "^0.22.10",
 		"handlebars": "^4.7.6",
 		"mailgun-js": "^0.22.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.12.58"
+		"@types/node": "^12.12.58",
+		"typescript": "^4.0.2"
 	},
 	"scripts": {
 		"test": "npm run build && jasmine --config=test/jasmine",
 		"build": "tsc --p tsconfig.json",
 		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
-		"postinstall": "tsc --p tsconfig.dist.json",
+		"prepare": "npm run build",
 		"doc": "typedoc --out docs src --excludeNotExported"
 	},
 	"repository": {
