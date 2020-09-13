@@ -1,5 +1,9 @@
 # ts-mailgun
 
+## [0.4.3]
+
+### Fixes
+
 ## [0.4.2] Mar-29-2020
 
 ### Fixes
