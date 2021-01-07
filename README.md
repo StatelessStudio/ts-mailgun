@@ -41,7 +41,7 @@ or if you're using Express:
 // Make sure you init() NodeMailgun before you start your server!
 ...
 router.post('/', (request, response, next) => {
-	mailer.send
+	mailer
 		.send('test@example.com', 'Hello!', '<h1>hsdf</h1>')
 		.then(() => next())
 		.catch((error) => response.sendStatus(500));
