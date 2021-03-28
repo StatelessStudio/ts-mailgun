@@ -237,7 +237,13 @@ if (template && template instanceof MailgunTemplate) {
 			console.error(error);
 		});
 }
+```typescript
+
 ```
+
+### Sending with a Template stored in Mailgun
+To send via a pre-stored template, just leave the body empty and define the template name via:
+`sendOptions.template === 'TEMPLATENAME'`
 
 ### Loading Header & Footer from HTML Templates
 
