@@ -237,6 +237,7 @@ if (template && template instanceof MailgunTemplate) {
 			console.error(error);
 		});
 }
+```
 
 
 ### Sending with a Template stored in Mailgun
