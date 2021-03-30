@@ -204,7 +204,9 @@ export class NodeMailgun {
 
 			message = Object.assign(message, sendOptions);
 			
-			if (!body || sendOptions?.template) delete message.html;
+			if (!body || sendOptions?.template) {
+				delete message.html;
+			}
 
 			// Send email
 			this.mailgun.messages().send(message, (error, result) => {
