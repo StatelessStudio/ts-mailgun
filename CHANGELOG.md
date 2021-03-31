@@ -6,6 +6,8 @@
 - [PR-42] Adding the possibility to send an email with a template stored in mailgun
 
 ### Fixes
+- npm update
+
 
 ## [0.4.3] Sep-13-2020 - Repackage
 
