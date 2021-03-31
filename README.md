@@ -83,7 +83,7 @@ View the Mailgun documentation: https://www.npmjs.com/package/mailgun-js#attachm
 const filepath = path.join(__dirname, 'mailgun_logo.png');
 
 mailer.send(
-	'serobnic@mail.ru',
+	'john.doe@example.com',
 	'Hello',
 	'Testing some Mailgun awesomeness!',
 	{},
@@ -178,7 +178,7 @@ async function main() {
 
 	// Send mail
 	await mailer
-		.listSend('newsletter@my-app.com', 'Newsletter', 'i got news 4 u %recipient.name%')
+		.listSend('newsletter@my-app.com', 'Newsletter', 'Hello %recipient.name%!')
 		.catch(console.error);
 }
 
