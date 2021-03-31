@@ -160,9 +160,9 @@ export class NodeMailgun {
 	public send(
 		to: string | string[],
 		subject: string,
-		body: string,
+		body?: string,
 		templateVars = {},
-		sendOptions = {}
+		sendOptions: any = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
@@ -203,6 +203,10 @@ export class NodeMailgun {
 			};
 
 			message = Object.assign(message, sendOptions);
+			
+			if (!body || sendOptions?.template) {
+				delete message.html;
+			}
 
 			// Send email
 			this.mailgun.messages().send(message, (error, result) => {

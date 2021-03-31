@@ -239,6 +239,15 @@ if (template && template instanceof MailgunTemplate) {
 }
 ```
 
+
+### Sending with a Template stored in Mailgun
+To send via a pre-stored template, leave the body empty and define the template name via:
+
+```typescript
+	sendOptions.template = 'TEMPLATENAME'
+```
+
+
 ### Loading Header & Footer from HTML Templates
 
 You can load the header & footer from HTML templates:
