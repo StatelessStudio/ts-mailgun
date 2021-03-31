@@ -162,7 +162,7 @@ export class NodeMailgun {
 		subject: string,
 		body?: string,
 		templateVars = {},
-		sendOptions = {}
+		sendOptions: any = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
