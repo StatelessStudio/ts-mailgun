@@ -1,5 +1,12 @@
 # ts-mailgun
 
+## [0.5.0] Mar-31-2021 - Mailgun Templates
+
+### Additions
+- [PR-42] Adding the possibility to send an email with a template stored in mailgun
+
+### Fixes
+
 ## [0.4.3] Sep-13-2020 - Repackage
 
 ### Fixes
