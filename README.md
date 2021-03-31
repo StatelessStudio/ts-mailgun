@@ -241,10 +241,10 @@ if (template && template instanceof MailgunTemplate) {
 
 
 ### Sending with a Template stored in Mailgun
-To send via a pre-stored template, just leave the body empty and define the template name via:
+To send via a pre-stored template, leave the body empty and define the template name via:
 
 ```typescript
-	sendOptions.template === 'TEMPLATENAME'
+	sendOptions.template = 'TEMPLATENAME'
 ```
 
 
