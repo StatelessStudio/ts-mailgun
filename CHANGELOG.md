@@ -1,5 +1,10 @@
 # ts-mailgun
 
+## [0.5.1] Jul-24-2021
+
+### Fixes
+- npm update
+
 ## [0.5.0] Mar-31-2021 - Mailgun Templates
 
 ### Additions
