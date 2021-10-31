@@ -10,6 +10,7 @@ import {
 	isStream,
 	streamToBuffer
 } from './utils';
+import { NodeMailgun } from './ts-mailgun';
 
 export type TestModeLogger = (a, b, c) => void;
 
@@ -53,7 +54,10 @@ export class Attachment implements AttachmentOptions {
  * 	mailgun.js library (where possible)
  */
 export class MailgunTransition {
-	public static options(opts: DeprecatedMailgunOptions, instance): Options {
+	public static options(
+		opts: DeprecatedMailgunOptions,
+		instance: NodeMailgun
+	): Options {
 		if (opts.domain) {
 			instance.domain = opts.domain;
 		}
@@ -152,7 +156,9 @@ export class MailgunTransition {
 		};
 	}
 
-	protected static attachmentBuffer(attachment: Buffer | Promise<Buffer>): TranslatedAttachment {
+	protected static attachmentBuffer(
+		attachment: Buffer | Promise<Buffer>
+	): TranslatedAttachment {
 		return {
 			filename: 'file',
 			data: attachment

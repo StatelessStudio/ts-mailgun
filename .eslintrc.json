@@ -20,7 +20,7 @@
 	"rules": {
 		"curly": 2,
 		"indent": [2, "tab"],
-		"max-len": [1, 80],
+		"max-len": [1, 85],
 		"no-empty": 1,
 		"@typescript-eslint/no-empty-interface": 1,
 		"no-eval": 2,

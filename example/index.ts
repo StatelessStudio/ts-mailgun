@@ -18,12 +18,10 @@ async function main() {
 	mailer.initMailingList(env.MAILGUN_NEWSLETTER);
 
 	// Send email to drewimmerman@gmail.com
-	await mailer
-		.send(env.TEST_EMAIL_TO, 'Hello John', '<h1>John,</h1>');
+	await mailer.send(env.TEST_EMAIL_TO, 'Hello John', '<h1>John,</h1>');
 
 	// Add user to mailing list
-	await mailer
-		.listAdd(env.TEST_EMAIL_TO, 'John Doe', { id: 1 })
+	await mailer.listAdd(env.TEST_EMAIL_TO, 'John Doe', { id: 1 })
 		.catch(error => {
 			if (error.isAlreadyExists) {
 				console.log('he already exists');
@@ -38,8 +36,11 @@ async function main() {
 	console.log('users', users);
 
 	// Send mailing list
-	await mailer
-		.listSend(env.MAILGUN_NEWSLETTER, 'Test Newsletter %recipient_name%', 'This newsletter is a test!');
+	await mailer.listSend(
+		env.MAILGUN_NEWSLETTER,
+		'Test Newsletter %recipient_name%',
+		'This newsletter is a test!'
+	);
 
 	// Send file image
 	await mailer.send(

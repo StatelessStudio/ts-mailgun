@@ -1,19 +1,19 @@
 import { Stream } from 'stream';
 export { Stream };
 
-export function isString(a) {
+export function isString(a: unknown): boolean {
 	return typeof a === 'string';
 }
 
-export function isBuffer(a) {
+export function isBuffer(a: unknown): boolean {
 	return Buffer.isBuffer(a);
 }
 
-export function isStream(a) {
+export function isStream(a: unknown): boolean {
 	return a instanceof Stream;
 }
 
-export function isArray(a) {
+export function isArray(a: unknown): boolean {
 	return Array.isArray(a);
 }
 

@@ -89,7 +89,7 @@ export class NodeMailgun {
 	/**
 	 * Initialize
 	 */
-	public init() {
+	public init(): NodeMailgun {
 		// Check input
 		if (!this.apiKey) {
 			throw new Error('Please pass a valid API Key to NodeMailgun()');
@@ -133,7 +133,7 @@ export class NodeMailgun {
 	 * Initialize mailing list
 	 * @param list Address to find list by
 	 */
-	public initMailingList(list: string) {
+	public initMailingList(list: string): NodeMailgun {
 		// Check input
 		if (!list) {
 			throw new Error('Please supply a mailing list');
@@ -214,7 +214,10 @@ export class NodeMailgun {
 		// Send email
 		message = MailgunTransition.message(message);
 
-		if (message?.attachment?.data && message.attachment.data instanceof Promise) {
+		if (
+			message?.attachment?.data &&
+			message.attachment.data instanceof Promise
+		) {
 			message.attachment.data = await message.attachment.data;
 		}
 
@@ -241,8 +244,6 @@ export class NodeMailgun {
 		templateVars = {},
 		sendOptions = {}
 	): Promise<any> {
-		let subject, body;
-
 		const subjectCompiler = Handlebars.compile(template.subject);
 		const bodyCompiler = Handlebars.compile(template.body);
 
@@ -250,8 +251,8 @@ export class NodeMailgun {
 		allVars = Object.assign(allVars, templateVars);
 		allVars = Object.assign(allVars, process.env);
 
-		subject = subjectCompiler(allVars);
-		body = bodyCompiler(allVars);
+		const subject = subjectCompiler(allVars);
+		const body = bodyCompiler(allVars);
 
 		return this.send(to, subject, body, templateVars, sendOptions);
 	}
@@ -259,14 +260,14 @@ export class NodeMailgun {
 	/**
 	 * Get list data of the current mailing list
 	 */
-	public async getList(): Promise<any> {
+	public async getList(): Promise<any[]> {
 		return this.mailgun.lists.members.listMembers(this.list);
 	}
 
 	/**
 	 * Get array of addresses in the current mailing list
 	 */
-	public async getListAddresses(): Promise<any> {
+	public async getListAddresses(): Promise<string[]> {
 		const list = await this.getList();
 		const addresses = [];
 
@@ -277,7 +278,6 @@ export class NodeMailgun {
 		}
 
 		return addresses;
-
 	}
 
 	/**
@@ -286,7 +286,11 @@ export class NodeMailgun {
 	 * @param name User's name
 	 * @param data User data
 	 */
-	public async listAdd(address: string, name: string, data: any): Promise<any> {
+	public async listAdd(
+		address: string,
+		name: string,
+		data: Record<string, unknown>
+	): Promise<any> {
 		// Check initialization
 		if (!this.mailgun || !this.list) {
 			throw new Error(
