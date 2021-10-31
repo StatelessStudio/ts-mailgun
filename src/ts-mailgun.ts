@@ -234,7 +234,7 @@ export class NodeMailgun {
 	 * @param templateVars Object Template variables to send
 	 * @param sendOptions Object Additional message options to send
 	 */
-	public sendFromTemplate(
+	public async sendFromTemplate(
 		to: string | string[],
 		template: MailgunTemplate,
 		templateVars = {},
@@ -258,7 +258,7 @@ export class NodeMailgun {
 	/**
 	 * Get list data of the current mailing list
 	 */
-	public getList(): Promise<any> {
+	public async getList(): Promise<any> {
 		return this.mailgun.lists.members.listMembers(this.list);
 	}
 
@@ -314,7 +314,7 @@ export class NodeMailgun {
 	 * 		name: string,
 	 * 		vars: Object
 	 */
-	public listUpdate(address: string, data: any): Promise<any> {
+	public async listUpdate(address: string, data: any): Promise<any> {
 		// Check initialization
 		if (!this.mailgun || !this.list) {
 			throw new Error(
@@ -331,7 +331,7 @@ export class NodeMailgun {
 	 * Unsubscribe a user from the list
 	 * @param address Email address to remove
 	 */
-	public listRemove(address: string): Promise<any> {
+	public async listRemove(address: string): Promise<any> {
 		// Check initialization
 		if (!this.mailgun || !this.list) {
 			throw new Error(
@@ -350,7 +350,7 @@ export class NodeMailgun {
 	 * @param subject Message subject
 	 * @param body Message body HTML
 	 */
-	public listSend(
+	public async listSend(
 		newsletter: string,
 		subject: string,
 		body: string
