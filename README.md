@@ -53,7 +53,7 @@ router.post('/', (request, response, next) => {
 ...
 ```
 
-View the complete [NodeMailgun example](https://github.com/StatelessStudio/ts-mailgun/blob/master/test/example.ts)
+View the complete [NodeMailgun example](https://github.com/StatelessStudio/ts-mailgun/blob/master/example/index.ts)
 
 ## Mailgun Options
 
