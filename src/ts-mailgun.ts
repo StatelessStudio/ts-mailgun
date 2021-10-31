@@ -167,7 +167,7 @@ export class NodeMailgun {
 		body?: string,
 		templateVars = {},
 		sendOptions: any = {}
-	): Promise<any> {
+	): Promise<void> {
 		// Check mailgun
 		if (!this.mailgun) {
 			throw new Error(
@@ -224,10 +224,11 @@ export class NodeMailgun {
 
 		if (this.testMode) {
 			this.testModeLogger(this.domain, message, null);
-			return Promise.resolve(true);
+			return Promise.resolve(undefined);
 		}
 		else {
-			return this.mailgun.messages.create(this.domain, message);
+			return this.mailgun.messages.create(this.domain, message)
+				.then(() => undefined);
 		}
 	}
 
