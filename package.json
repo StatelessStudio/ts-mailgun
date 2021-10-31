@@ -1,6 +1,6 @@
 {
 	"name": "ts-mailgun",
-	"version": "0.5.1",
+	"version": "1.0.0",
 	"description": "Mailgun wrapper for sending emails from NodeJS",
 	"main": "dist/ts-mailgun.js",
 	"types": "dist/ts-mailgun.d.ts",

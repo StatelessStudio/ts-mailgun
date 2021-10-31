@@ -1,5 +1,13 @@
 # ts-mailgun
 
+## [1.0.0] Switch to Mailgun.js
+
+### Breaking Changes
+
+### Additions
+
+### Fixes
+
 ## [0.5.1] Jul-24-2021
 
 ### Fixes
