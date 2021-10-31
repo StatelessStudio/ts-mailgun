@@ -1,7 +1,17 @@
 import * as fs from 'fs';
-import * as Mailgun from 'mailgun-js';
+
+const FormData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(FormData);
+
+import Client from 'mailgun.js/dist/lib/client';
+
 import * as Handlebars from 'handlebars';
 import { MailgunTemplate } from './mailgun-template';
+import {
+	DeprecatedMailgunOptions,
+	MailgunTransition
+} from './mailgun-transition';
 
 /**
  * Create a NodeMailgun mailer.
@@ -19,11 +29,11 @@ import { MailgunTemplate } from './mailgun-template';
  * @param domain string (Optional) Mailgun registered domain
  */
 export class NodeMailgun {
-	// Mailgun core object
-	public mailgun: Mailgun.Mailgun;
-
 	// Test mode
 	public testMode = false;
+
+	// Test mode logger
+	public testModeLogger: Function = console.log;
 
 	// Mailgun API Key
 	public apiKey: string;
@@ -32,10 +42,10 @@ export class NodeMailgun {
 	public domain: string;
 
 	// Mailgun Options
-	public options?: Object;
+	public options: Partial<DeprecatedMailgunOptions> = {};
 
 	// Mailgun list name
-	public list?: any;
+	public list?: string;
 
 	// Templates
 	public templates = {};
@@ -60,6 +70,9 @@ export class NodeMailgun {
 
 	// Unsubscribe link
 	public unsubscribeLink?: boolean | string = true;
+
+	// Mailgun core object
+	protected mailgun: Client;
 
 	/**
 	 * Constructor
@@ -94,21 +107,10 @@ export class NodeMailgun {
 		}
 
 		// Mailgun options
-		let options = {
-			apiKey: this.apiKey,
-			domain: this.domain
-		};
-
-		if (this.testMode) {
-			options['testMode'] = true;
-		}
-
-		if (this.options) {
-			options = Object.assign(options, this.options);
-		}
+		const options = MailgunTransition.options(this.options, this);
 
 		// Initialize Mailgun
-		this.mailgun = new Mailgun(options);
+		this.mailgun = mailgun.client(options);
 
 		return this;
 	}
@@ -144,7 +146,7 @@ export class NodeMailgun {
 		}
 
 		// Get lists
-		this.list = this.mailgun.lists(list);
+		this.list = list;
 
 		return this;
 	}
@@ -157,63 +159,71 @@ export class NodeMailgun {
 	 * @param templateVars Object Template variables to send
 	 * @param sendOptions Object Additional message options to send
 	 */
-	public send(
+	public async send(
 		to: string | string[],
 		subject: string,
 		body?: string,
 		templateVars = {},
 		sendOptions: any = {}
 	): Promise<any> {
-		return new Promise((accept, reject) => {
-			// Check mailgun
-			if (!this.mailgun) {
-				reject(
-					'Please call NodeMailgun::init() before sending a message!'
-				);
+		// Check mailgun
+		if (!this.mailgun) {
+			throw new Error(
+				'Please call NodeMailgun::init() before sending a message!'
+			);
+		}
 
-				return;
-			}
+		// Create subject
+		subject = this.subjectPre + subject + this.subjectPost;
 
-			// Create subject
-			subject = this.subjectPre + subject + this.subjectPost;
+		// Create unsubscribe link
+		let unsubscribeLink;
+		if (this.unsubscribeLink === true) {
+			unsubscribeLink =
+				'<br><br><a href="%unsubscribe_url%">Unsubscribe</a>';
+		}
+		else if (typeof this.unsubscribeLink === 'string') {
+			unsubscribeLink = '<br><br>' + this.unsubscribeLink;
+		}
+		else {
+			unsubscribeLink = '';
+		}
 
-			// Create unsubscribe link
-			let unsubscribeLink;
-			if (this.unsubscribeLink === true) {
-				unsubscribeLink =
-					'<br><br><a href="%unsubscribe_url%">Unsubscribe</a>';
-			}
-			else if (typeof this.unsubscribeLink === 'string') {
-				unsubscribeLink = '<br><br>' + this.unsubscribeLink;
-			}
-			else {
-				unsubscribeLink = '';
-			}
+		// Create body
+		body = this.header + body + this.footer + unsubscribeLink;
 
-			// Create body
-			body = this.header + body + this.footer + unsubscribeLink;
+		// Create message parts
+		let message: any = {
+			from: `${this.fromTitle} <${this.fromEmail}>`,
+			to: to,
+			subject: subject,
+			html: body
+		};
 
-			// Create message parts
-			let message = {
-				from: `${this.fromTitle} <${this.fromEmail}>`,
-				to: to,
-				subject: subject,
-				html: body,
-				'recipient-variables': templateVars
-			};
+		if (templateVars && Object.keys(templateVars).length) {
+			message['recipient-variables'] = JSON.stringify(templateVars);
+		}
 
-			message = Object.assign(message, sendOptions);
-			
-			if (!body || sendOptions?.template) {
-				delete message.html;
-			}
+		message = Object.assign(message, sendOptions);
 
-			// Send email
-			this.mailgun.messages().send(message, (error, result) => {
-				// Pass result through Promise
-				error ? reject(error) : accept(result);
-			});
-		});
+		if (!body || sendOptions?.template) {
+			delete message.html;
+		}
+
+		// Send email
+		message = MailgunTransition.message(message);
+
+		if (message?.attachment?.data && message.attachment.data instanceof Promise) {
+			message.attachment.data = await message.attachment.data;
+		}
+
+		if (this.testMode) {
+			this.testModeLogger(this.domain, message, null);
+			return Promise.resolve(true);
+		}
+		else {
+			return this.mailgun.messages.create(this.domain, message);
+		}
 	}
 
 	/**
@@ -249,32 +259,24 @@ export class NodeMailgun {
 	 * Get list data of the current mailing list
 	 */
 	public getList(): Promise<any> {
-		return new Promise((accept, reject) => {
-			this.list.members().list((error, result) => {
-				error ? reject(error) : accept(result);
-			});
-		});
+		return this.mailgun.lists.members.listMembers(this.list);
 	}
 
 	/**
 	 * Get array of addresses in the current mailing list
 	 */
-	public getListAddresses(): Promise<any> {
-		return new Promise((accept, reject) => {
-			this.getList()
-				.then((list) => {
-					const addresses = [];
+	public async getListAddresses(): Promise<any> {
+		const list = await this.getList();
+		const addresses = [];
 
-					for (let user of list.items) {
-						if ('address' in user) {
-							addresses.push(user.address);
-						}
-					}
+		for (let user of list) {
+			if ('address' in user) {
+				addresses.push(user.address);
+			}
+		}
 
-					accept(addresses);
-				})
-				.catch((error) => reject(error));
-		});
+		return addresses;
+
 	}
 
 	/**
@@ -283,31 +285,25 @@ export class NodeMailgun {
 	 * @param name User's name
 	 * @param data User data
 	 */
-	public listAdd(address: string, name: string, data: any): Promise<any> {
-		return new Promise((accept, reject) => {
-			// Check initialization
-			if (!this.mailgun || !this.list) {
-				reject(
-					'Please call NodeMailgun::initMailingList()\
-					before adding to a list.'
-				);
+	public async listAdd(address: string, name: string, data: any): Promise<any> {
+		// Check initialization
+		if (!this.mailgun || !this.list) {
+			throw new Error(
+				'Please call NodeMailgun::initMailingList()\
+				before adding to a list.'
+			);
+		}
 
-				return;
-			}
+		// Create user object
+		const user = {
+			subscribed: true,
+			address: address,
+			name: name,
+			vars: data
+		};
 
-			// Create user object
-			const user = {
-				subscribed: true,
-				address: address,
-				name: name,
-				vars: data
-			};
-
-			// Add user to list
-			this.list.members().create(user, (error, result) => {
-				error ? reject(error) : accept(result);
-			});
-		});
+		// Add user to list
+		return this.mailgun.lists.members.createMember(this.list, user);
 	}
 
 	/**
@@ -319,22 +315,16 @@ export class NodeMailgun {
 	 * 		vars: Object
 	 */
 	public listUpdate(address: string, data: any): Promise<any> {
-		return new Promise((accept, reject) => {
-			// Check initialization
-			if (!this.mailgun || !this.list) {
-				reject(
-					'Please call NodeMailgun::initMailingList()\
-					before updating a list.'
-				);
+		// Check initialization
+		if (!this.mailgun || !this.list) {
+			throw new Error(
+				'Please call NodeMailgun::initMailingList()\
+				before updating a list.'
+			);
+		}
 
-				return;
-			}
-
-			// Update user
-			this.list.members(address).update(data, (error, result) => {
-				error ? reject(error) : accept(result);
-			});
-		});
+		// Update user
+		return this.mailgun.lists.members.updateMember(this.list, address, data);
 	}
 
 	/**
@@ -342,22 +332,16 @@ export class NodeMailgun {
 	 * @param address Email address to remove
 	 */
 	public listRemove(address: string): Promise<any> {
-		return new Promise((accept, reject) => {
-			// Check initialization
-			if (!this.mailgun || !this.list) {
-				reject(
-					'Please call NodeMailgun::initMailingList()\
-					before removing from a list.'
-				);
+		// Check initialization
+		if (!this.mailgun || !this.list) {
+			throw new Error(
+				'Please call NodeMailgun::initMailingList()\
+				before removing from a list.'
+			);
+		}
 
-				return;
-			}
-
-			// Update user
-			this.list.members(address).delete((error, result) => {
-				error ? reject(error) : accept(result);
-			});
-		});
+		// Update user
+		return this.mailgun.lists.members.destroyMember(this.list, address);
 	}
 
 	/**
@@ -371,7 +355,7 @@ export class NodeMailgun {
 		subject: string,
 		body: string
 	): Promise<any> {
-		return this.send(newsletter, subject, body, {});
+		return this.send(newsletter, subject, body);
 	}
 
 	/**

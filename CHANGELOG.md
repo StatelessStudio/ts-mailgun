@@ -3,6 +3,9 @@
 ## [1.0.0] Switch to Mailgun.js
 
 ### Breaking Changes
+See MIGRATION.md for upgrading to v1.x.x
+
+- Switch to mailgun.js
 
 ### Additions
 

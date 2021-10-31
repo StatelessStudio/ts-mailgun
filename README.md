@@ -14,6 +14,10 @@ Created and maintained by [Stateless Studio](https://stateless.studio)
 npm i ts-mailgun
 ```
 
+## Upgrading
+
+See MIGRATION.md for a guide on upgrading.
+
 ## Sending Mail
 
 ```typescript
@@ -77,8 +81,14 @@ You may add additional options to `send()` by passing an object to `sendOptions`
 
 ### Attachments
 
-View the Mailgun documentation: https://www.npmjs.com/package/mailgun-js#attachments 
+Attachments should be sent in `attachments`. This can be an array of attachments, or a single attachment.
 
+An attachment can be a:
+	- Filename string
+	- Stream or Buffer (filename will be `file`)
+	- Attachment Object (see example below)
+
+*Filename*:
 ```typescript
 const filepath = path.join(__dirname, 'mailgun_logo.png');
 
@@ -88,6 +98,25 @@ mailer.send(
 	'Testing some Mailgun awesomeness!',
 	{},
 	{ attachment: filepath } // Set attachment
+);
+```
+
+*Attachment Object*
+```typescript
+import { Attachment } from 'ts-mailgun';
+const filepath = path.join(__dirname, 'mailgun_logo.png');
+
+mailer.send(
+	'john.doe@example.com',
+	'Hello',
+	'Testing some Mailgun awesomeness!',
+	{},
+	{
+		attachment: new Attachment({
+			filename: 'john.png',
+			data: filepath
+		})
+	}
 );
 ```
 
@@ -262,28 +291,4 @@ If you use an unsubscribe link in your footer template, you will want to disable
 
 ```typescript
 	mailer.unsubscribeLink = false;
-```
-
-## Accessing the Mailgun object directly
-
-The `Mailgun` object is exposed through `NodeMailgun::mailgun`, so you can access it directly
-
-### Generic Requests
-
-If you'd like to send Generic Requests (https://www.npmjs.com/package/mailgun-js#generic-requests), you may use the `mailgun` member:
-
-```typescript
-const mailer = new NodeMailgun();
-
-...
-
-mailer.init();
-
-mailer.mailgun.get(
-	'/samples.mailgun.org/stats',
-	{ event: ['sent', 'delivered'] },
-	function (error, body) {
-		console.log(body);
-	}
-);
 ```

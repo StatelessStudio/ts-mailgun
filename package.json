@@ -11,13 +11,13 @@
 		"dist/*"
 	],
 	"dependencies": {
-		"@types/mailgun-js": "^0.22.12",
+		"form-data": "^4.0.0",
 		"handlebars": "^4.7.7",
-		"mailgun-js": "^0.22.0"
+		"mailgun.js": "^3.7.2"
 	},
 	"devDependencies": {
-		"@types/node": "^12.20.16",
-		"typescript": "^4.3.5"
+		"@types/node": "^12.20.36",
+		"typescript": "^4.4.4"
 	},
 	"scripts": {
 		"test": "npm run build && jasmine --config=test/jasmine",
