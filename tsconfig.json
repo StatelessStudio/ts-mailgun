@@ -1,7 +1,7 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"baseUrl": "./src/",
+		"baseUrl": "./",
 		"outDir": "./dist",
 		"sourceMap": true,
 		"declaration": true,
@@ -9,12 +9,9 @@
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"target": "es5",
+		"target": "es6",
 		"types": ["node"],
 		"typeRoots": ["node_modules/@types", "./"],
 		"lib": ["es2017"]
-	},
-	"exclude": [
-		"./test/"
-	]
+	}
 }
