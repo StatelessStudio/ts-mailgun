@@ -23,4 +23,4 @@ export const env: Environment = Object.assign(
 	envfile.parsed
 );
 
-env.MAILGUN_TEST_MODE = envfile.parsed.MAILGUN_TEST_MODE === 'true' ? true : false;
+env.MAILGUN_TEST_MODE = envfile.parsed.MAILGUN_TEST_MODE === 'true';
