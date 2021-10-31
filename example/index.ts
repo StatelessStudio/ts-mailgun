@@ -19,13 +19,19 @@ mailer.initMailingList(env.MAILGUN_NEWSLETTER);
 async function main() {
 	// Send email to drewimmerman@gmail.com
 	await mailer
-		.send(env.TEST_EMAIL_TO, 'Hello John', '<h1>John,</h1>')
-		.catch(console.error);
+		.send(env.TEST_EMAIL_TO, 'Hello John', '<h1>John,</h1>');
 
 	// Add user to mailing list
 	await mailer
 		.listAdd(env.TEST_EMAIL_TO, 'John Doe', { id: 1 })
-		.catch(console.error);
+		.catch(error => {
+			if (error.isAlreadyExists) {
+				console.log('he already exists');
+			}
+			else {
+				throw error;
+			}
+		});
 
 	// Get user list
 	const users = await mailer.getListAddresses().catch(console.error);
@@ -33,8 +39,7 @@ async function main() {
 
 	// Send mailing list
 	await mailer
-		.listSend(env.MAILGUN_NEWSLETTER, 'Test Newsletter %recipient_name%', 'This newsletter is a test!')
-		.catch(console.error);
+		.listSend(env.MAILGUN_NEWSLETTER, 'Test Newsletter %recipient_name%', 'This newsletter is a test!');
 
 	// Send file image
 	await mailer.send(
