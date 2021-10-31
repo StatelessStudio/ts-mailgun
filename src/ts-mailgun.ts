@@ -48,7 +48,7 @@ export class NodeMailgun {
 	public list?: string;
 
 	// Templates
-	public templates = {};
+	public templates: Record<string, MailgunTemplate> = {};
 
 	// Sender email address
 	public fromEmail: string;
