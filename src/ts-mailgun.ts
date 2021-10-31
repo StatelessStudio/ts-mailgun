@@ -10,7 +10,8 @@ import * as Handlebars from 'handlebars';
 import { MailgunTemplate } from './mailgun-template';
 import {
 	DeprecatedMailgunOptions,
-	MailgunTransition
+	MailgunTransition,
+	TestModeLogger
 } from './mailgun-transition';
 
 /**
@@ -33,7 +34,7 @@ export class NodeMailgun {
 	public testMode = false;
 
 	// Test mode logger
-	public testModeLogger: (a, b, c) => void = console.log;
+	public testModeLogger: TestModeLogger = console.log;
 
 	// Mailgun API Key
 	public apiKey: string;

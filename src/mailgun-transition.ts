@@ -11,6 +11,8 @@ import {
 	streamToBuffer
 } from './utils';
 
+export type TestModeLogger = (a, b, c) => void;
+
 export interface DeprecatedMailgunOptions {
 	apiKey?: string;
 	publicApiKey?: string;
@@ -22,7 +24,7 @@ export interface DeprecatedMailgunOptions {
 	port?: number;
 	endpoint?: string;
 	testMode?: boolean;
-	testModeLogger?: boolean;
+	testModeLogger?: TestModeLogger;
 }
 
 type TranslatedAttachmentData = string | Buffer;
