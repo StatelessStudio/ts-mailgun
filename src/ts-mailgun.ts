@@ -303,7 +303,19 @@ export class NodeMailgun {
 		};
 
 		// Add user to list
-		return this.mailgun.lists.members.createMember(this.list, user);
+		return this.mailgun.lists.members.createMember(this.list, user)
+			.catch(async error => {
+				if (
+					error?.details &&
+					error.details.includes('Address already exists')
+				) {
+					error.isAlreadyExists = true;
+					throw error;
+				}
+				else {
+					throw error;
+				}
+			});
 	}
 
 	/**
