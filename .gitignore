@@ -62,3 +62,9 @@ typings/
 
 # Build directory
 dist/
+
+# Environment Variables
+.env
+
+# Docs build
+docs/

@@ -2,29 +2,55 @@
 	"name": "ts-mailgun",
 	"version": "1.0.0",
 	"description": "Mailgun wrapper for sending emails from NodeJS",
-	"main": "dist/ts-mailgun.js",
-	"types": "dist/ts-mailgun.d.ts",
+	"main": "dist/src/index.js",
+	"types": "dist/src/index.d.ts",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"dist/*"
+		"dist/src/*"
 	],
+	"ts-project-version": "1.2.4",
 	"dependencies": {
 		"form-data": "^4.0.0",
 		"handlebars": "^4.7.7",
-		"mailgun.js": "^3.7.2"
+		"mailgun.js": "^3.7.2",
+		"source-map-support": "^0.5.20"
 	},
 	"devDependencies": {
-		"@types/node": "^12.20.36",
+		"@istanbuljs/nyc-config-typescript": "^1.0.1",
+		"@types/jasmine": "^3.10.1",
+		"@types/node": "^12.20.32",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
+		"coveralls": "^3.1.1",
+		"dotenv": "^10.0.0",
+		"eslint": "^7.32.0",
+		"jasmine": "^3.9.0",
+		"nyc": "^15.1.0",
+		"ts-node": "^10.3.0",
+		"typedoc": "^0.21.9",
 		"typescript": "^4.4.4"
 	},
 	"scripts": {
-		"test": "npm run build && jasmine --config=test/jasmine",
-		"build": "tsc --p tsconfig.json",
-		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
-		"prepare": "npm run build",
-		"doc": "typedoc --out docs src --excludeNotExported"
+		"start": "npm run dev",
+		"dev": "npm run lint && ts-node example/index.ts",
+		"test": "npm run build:dev:clean && npm run coverage",
+		"clean": "rm -rf dist",
+		"build:dev": "npm run lint && npm run preprocess && npm run compile && npm run postprocess",
+		"build:dev:clean": "npm run clean && npm run build:dev",
+		"build:prod": "npm run preprocess prod && npm run lint:prod && npm run compile && npm run postprocess prod",
+		"build:prod:clean": "npm run clean && npm run build:prod",
+		"compile": "./node_modules/.bin/tsc",
+		"prepare": "npm run build:prod:clean",
+		"preprocess": "",
+		"postprocess": "",
+		"doc": "typedoc --out docs src",
+		"lint": "eslint . --ext .ts --fix",
+		"lint:prod": "eslint . --ext .ts --fix --config=.eslintrc.prod.json",
+		"coverage": "nyc npm run coverage-test",
+		"coverage-test": "jasmine --config=jasmine.json",
+		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"repository": {
 		"type": "git",

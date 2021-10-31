@@ -3,3 +3,5 @@ node_js:
   - "12.13.0"
 install:
   - npm install --ignore-scripts
+after_success:
+	- npm run coveralls

@@ -18,13 +18,13 @@ import {
  * 	You must create a new NodeMailgun() instance, set the necessary members (below),
  * 	and then call init(). After initialization, you can then call send() to send an
  * 	email.
- * 
+ *
  * 	Necessary Members:
  * 		- apiKey Mailgun API Key
  * 		- domain Mailgun registered domain
  * 		- fromEmail Email address to send from (Does not have to exist)
  * 		- fromTitle Email address sender name
- * 
+ *
  * @param apiKey string (Optional) Mailgun API Key
  * @param domain string (Optional) Mailgun registered domain
  */
@@ -33,7 +33,7 @@ export class NodeMailgun {
 	public testMode = false;
 
 	// Test mode logger
-	public testModeLogger: Function = console.log;
+	public testModeLogger: (a, b, c) => void = console.log;
 
 	// Mailgun API Key
 	public apiKey: string;
@@ -269,7 +269,7 @@ export class NodeMailgun {
 		const list = await this.getList();
 		const addresses = [];
 
-		for (let user of list) {
+		for (const user of list) {
 			if ('address' in user) {
 				addresses.push(user.address);
 			}

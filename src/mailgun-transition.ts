@@ -78,12 +78,12 @@ export class MailgunTransition {
 				opts.host.replace(/[a-z]+:\/\//, '') :
 				'api.mailgun.net';
 
-			let protocol = opts.protocol ? opts.protocol + '//' : 'https://';
-			let port = opts.port ? ':' + opts.port : '';
+			const protocol = opts.protocol ? opts.protocol + '//' : 'https://';
+			const port = opts.port ? ':' + opts.port : '';
 			let endpoint;
 
 			if (url.includes('/')) {
-				let endpointStarts = url.indexOf('/');
+				const endpointStarts = url.indexOf('/');
 				endpoint = url.substring(endpointStarts);
 				url = url.substring(0, endpointStarts);
 			}
@@ -154,7 +154,7 @@ export class MailgunTransition {
 		return {
 			filename: 'file',
 			data: attachment
-		}
+		};
 	}
 
 	protected static attachmentStream(attachment: Stream): TranslatedAttachment {
