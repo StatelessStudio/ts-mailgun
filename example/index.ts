@@ -3,20 +3,20 @@ import * as fs from 'fs';
 
 import { env } from './environment';
 
-// Setup mailgun
-const mailer = new NodeMailgun();
-mailer.testMode = env.MAILGUN_TEST_MODE;
-mailer.apiKey = env.MAILGUN_API_KEY;
-mailer.domain = env.MAILGUN_DOMAIN;
-mailer.fromEmail = env.MAILGUN_FROM_EMAIL;
-mailer.fromTitle = env.APP_TITLE;
-
-// Initialize mailgun & newsletter mailing list
-mailer.init();
-mailer.initMailingList(env.MAILGUN_NEWSLETTER);
-
 // Async function
 async function main() {
+	// Setup mailgun
+	const mailer = new NodeMailgun();
+	mailer.testMode = env.MAILGUN_TEST_MODE;
+	mailer.apiKey = env.MAILGUN_API_KEY;
+	mailer.domain = env.MAILGUN_DOMAIN;
+	mailer.fromEmail = env.MAILGUN_FROM_EMAIL;
+	mailer.fromTitle = env.APP_TITLE;
+
+	// Initialize mailgun & newsletter mailing list
+	mailer.init();
+	mailer.initMailingList(env.MAILGUN_NEWSLETTER);
+
 	// Send email to drewimmerman@gmail.com
 	await mailer
 		.send(env.TEST_EMAIL_TO, 'Hello John', '<h1>John,</h1>');
