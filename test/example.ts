@@ -1,4 +1,5 @@
-import { NodeMailgun } from '../src/ts-mailgun';
+import { NodeMailgun, Attachment } from '../src/';
+import * as fs from 'fs';
 
 // Setup mailgun
 const mailer = new NodeMailgun();
@@ -29,8 +30,41 @@ async function main() {
 
 	// Send mailing list
 	await mailer
-		.listSend('Newsletter', 'i got news 4 u %recipient.name%', users)
+		.listSend('newsletter@mg.stateless.studio', 'Test Newsletter %recipient_name%', `This newsletter is a test!`)
 		.catch(console.error);
+
+	// Send file image
+	await mailer.send(
+		'john.doe@example.com',
+		'File Image',
+		'sadf',
+		{},
+		{
+			attachment: '~/Downloads/jpg.png'
+		}
+	);
+
+	// Send buffer image
+	await mailer.send(
+		'john.doe@example.com',
+		'Buffer Image',
+		'sadf',
+		{},
+		{
+			attachment: fs.readFileSync('~/Downloads/jpg.png')
+		}
+	)
+
+	// Send stream image
+	await mailer.send(
+		'john.doe@example.com',
+		'Stream Image',
+		'sadf',
+		{},
+		{
+			attachment: fs.createReadStream('~/Downloads/jpg.png')
+		}
+	);
 }
 
 main();
