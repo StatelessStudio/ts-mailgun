@@ -13,6 +13,7 @@ import {
 	MailgunTransition,
 	TestModeLogger
 } from './mailgun-transition';
+import { isString } from './utils';
 
 /**
  * Create a NodeMailgun mailer.
@@ -289,7 +290,7 @@ export class NodeMailgun {
 	public async listAdd(
 		address: string,
 		name: string,
-		data: Record<string, unknown>
+		data: string | Record<string, unknown>
 	): Promise<any> {
 		// Check initialization
 		if (!this.mailgun || !this.list) {
@@ -304,7 +305,7 @@ export class NodeMailgun {
 			subscribed: true,
 			address: address,
 			name: name,
-			vars: data
+			vars: (isString(data) ? data : JSON.stringify(data)) as string
 		};
 
 		// Add user to list
