@@ -8,13 +8,13 @@ import { MailgunTemplate } from './mailgun-template';
  * 	You must create a new NodeMailgun() instance, set the necessary members (below),
  * 	and then call init(). After initialization, you can then call send() to send an
  * 	email.
- * 
+ *
  * 	Necessary Members:
  * 		- apiKey Mailgun API Key
  * 		- domain Mailgun registered domain
  * 		- fromEmail Email address to send from (Does not have to exist)
  * 		- fromTitle Email address sender name
- * 
+ *
  * @param apiKey string (Optional) Mailgun API Key
  * @param domain string (Optional) Mailgun registered domain
  */
@@ -162,7 +162,10 @@ export class NodeMailgun {
 		subject: string,
 		body?: string,
 		templateVars = {},
-		sendOptions: any = {}
+		sendOptions: any & {
+			isStoredTemplate?: boolean
+			template?: string;
+		} = {}
 	): Promise<any> {
 		return new Promise((accept, reject) => {
 			// Check mailgun
@@ -190,22 +193,30 @@ export class NodeMailgun {
 				unsubscribeLink = '';
 			}
 
-			// Create body
-			body = this.header + body + this.footer + unsubscribeLink;
-
-			// Create message parts
 			let message = {
 				from: `${this.fromTitle} <${this.fromEmail}>`,
 				to: to,
 				subject: subject,
-				html: body,
 				'recipient-variables': templateVars
 			};
 
-			message = Object.assign(message, sendOptions);
-			
+			if (sendOptions.isStoredTemplate) {
+				if (!sendOptions.template) {
+					throw new Error('You must define template name');
+				}
+
+				if (body) {
+					throw new Error("Body must be empty, undefined or null if you are using stored template")
+				}
+
+				message = Object.assign(message, sendOptions);
+			} else {
+				let composedBody = this.header + body + this.footer + unsubscribeLink;
+				message = Object.assign(message, { html: composedBody })
+			}
+
 			if (!body || sendOptions?.template) {
-				delete message.html;
+				delete message['html'];
 			}
 
 			// Send email
