@@ -21,9 +21,9 @@
 	},
 	"scripts": {
 		"test": "npm run build && jasmine --config=test/jasmine",
-		"build": "tsc --p tsconfig.json",
+		"build": "rm -rf dist && tsc --p tsconfig.json",
 		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
-		"prepare": "npm run build",
+		"prepare": "rm -rf dist && npm run build",
 		"doc": "typedoc --out docs src --excludeNotExported"
 	},
 	"repository": {
