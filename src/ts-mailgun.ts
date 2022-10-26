@@ -216,6 +216,7 @@ export class NodeMailgun {
 			}
 
 			if (!body || sendOptions?.template) {
+				// @ts-ignore
 				delete message['html'];
 			}
 
